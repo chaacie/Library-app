@@ -49,11 +49,8 @@
 6. **Запуск сервера**
 
    ```bash
-   python manage.py runserver
-
-
-
-# 
+   python manage.py runserver #http://localhost:8000
+ 
    
 
    
