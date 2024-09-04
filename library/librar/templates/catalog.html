@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Каталог книг</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.title }}
+                <button type="button" class="btn btn-info btn-sm" onclick="copyTitle('{{ book.title }}')">Copy</button>
+                </td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.genre }}</td>
+                <td>
+                    <form method="post" action="{% url 'borrow_book' book.id %}">
+                        {% csrf_token %}
+                        {% if not user.is_librian and user.is_authenticated %}
+                        <button type="submit" class="btn btn-success" onclick="showAlert('{{ user.first_name }}')">Взять книгу</button>
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+function showAlert(name) {
+    alert(name + ', вы успешно взяли книгу')
+}
+
+
+function copyTitle(title) {
+    navigator.clipboard.writeText(title);
+    alert("Скопирован: " + title);
+}
+</script>
+{% endblock %}

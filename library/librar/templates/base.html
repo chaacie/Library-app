@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Каталог{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'catalog' %}">Каталог</a>
+        {% if user.is_authenticated %}
+        {% if user.is_librian %}
+        <a class="navbar-brand" href="{% url 'librian_page' %}">Список должников</a>
+        <li claas="navbar-brand"></li>
+        {% else %}
+        <a class="navbar-brand" href="{% url 'my_books'%}">Мои книги</a>
+        {% endif %}
+        <li class="navbar-brand"><a class="navbar-brans" href="{% url 'profile' %}"> {{user.username}}</a> | </li><a class="navbar-brand" href="{% url 'users:logout' %}">Выйти</a>
+        {% else %}
+        <a class="navbar-brand" href="{% url 'users:login' %}">Войти</a>
+        <a class="navbar-brand" href="{% url 'users:sign_up' %}">Зарегистрироваться</a>
+        {% endif %}
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

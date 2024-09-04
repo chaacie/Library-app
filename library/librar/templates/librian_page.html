@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Список должников</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Адрес</th>
+            <th>Название книги</th>
+            <th>Дата получения</th>
+            <th>Дней на руках</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for borrowed_book in overdue_books %}
+            <tr>
+                <td>{{ borrowed_book.user.username }}</td>
+                <td>{{ borrowed_book.user.first_name }}</td>
+                <td>{{ borrowed_book.user.last_name }}</td>
+                <td>{{ borrowed_book.user.address }}</td>
+                <td>{{ borrowed_book.book.title }}</td>
+                <td>{{ borrowed_book.borrowed_at|date:"d.m.Y H:i" }}</td>
+                <td>{{ borrowed_book.borrowed_at|timesince }} назад</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
